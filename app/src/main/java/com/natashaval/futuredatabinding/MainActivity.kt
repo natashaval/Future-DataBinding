@@ -4,17 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.natashaval.futuredatabinding.ProfileActivity.Companion.FIRST_NAME_KEY
 import com.natashaval.futuredatabinding.ProfileActivity.Companion.LAST_NAME_KEY
+import com.natashaval.futuredatabinding.ScoreActivity.Companion.SCORE_KEY
+import com.natashaval.futuredatabinding.ScoreActivity.Companion.SCORE_TITLE_KEY
 import com.natashaval.futuredatabinding.adapter.ScoreAdapter
 import com.natashaval.futuredatabinding.databinding.ActivityMainBinding
 import com.natashaval.futuredatabinding.viewmodel.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ScoreAdapter.ScoreListener {
 
   private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
   private lateinit var binding: ActivityMainBinding
@@ -63,11 +66,22 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun showScoreBoard() {
-    val scoreAdapter = ScoreAdapter(mScoreList)
+    val scoreAdapter = ScoreAdapter(mScoreList, this)
     with(binding.rvScoreBoard) {
       adapter = scoreAdapter
       layoutManager = LinearLayoutManager(this@MainActivity)
 //      layoutManager = GridLayoutManager(this@MainActivity, 2)
     }
+  }
+
+  override fun onScoreClicked(value: Int) {
+    openScoreActivity(value)
+  }
+
+  private fun openScoreActivity(value: Int) {
+    val intent = Intent(this, ScoreActivity::class.java)
+    intent.putExtra(SCORE_TITLE_KEY, "Score: ")
+    intent.putExtra(SCORE_KEY, value)
+    startActivity(intent)
   }
 }

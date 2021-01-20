@@ -11,11 +11,12 @@ import com.natashaval.futuredatabinding.databinding.ItemScoreBinding
 /**
  * Created by natasha.santoso on 20/01/21.
  */
-class ScoreAdapter(private val scoreList: List<Int>): RecyclerView.Adapter<ScoreAdapter.ScoreViewHolder>() {
+class ScoreAdapter(private val scoreList: List<Int>, private val listener: ScoreListener)
+    : RecyclerView.Adapter<ScoreAdapter.ScoreViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_score, parent, false)
-        return ScoreViewHolder(view)
+        return ScoreViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
@@ -24,21 +25,16 @@ class ScoreAdapter(private val scoreList: List<Int>): RecyclerView.Adapter<Score
 
     override fun getItemCount(): Int = scoreList.size
 
-    inner class ScoreViewHolder(view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
+    inner class ScoreViewHolder(view: View, private val listener: ScoreListener): RecyclerView.ViewHolder(view) {
         private val binding: ItemScoreBinding? = DataBindingUtil.bind(view)
-
-        init {
-            view.setOnClickListener(this)
-        }
 
         fun bind(value: Int) {
             binding?.score = value
+            binding?.root?.setOnClickListener { listener.onScoreClicked(value) }
         }
+    }
 
-        override fun onClick(v: View?) {
-            binding?.tvScoreData?.run {
-                text = "Clicked! ${this.text}"
-            }
-        }
+    interface ScoreListener {
+        fun onScoreClicked(value: Int)
     }
 }

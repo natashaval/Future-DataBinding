@@ -92,7 +92,7 @@
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Score"
+            android:text="@string/score_title"
             app:layout_constraintTop_toBottomOf="@id/bt_profile_activity"
             app:layout_constraintStart_toStartOf="@id/tv_score"
             app:layout_constraintEnd_toEndOf="@id/tv_score" />
