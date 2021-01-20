@@ -4,15 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.natashaval.futuredatabinding.ProfileActivity.Companion.FIRST_NAME_KEY
 import com.natashaval.futuredatabinding.ProfileActivity.Companion.LAST_NAME_KEY
 import com.natashaval.futuredatabinding.databinding.ActivityMainBinding
-import com.natashaval.futuredatabinding.model.User
 import com.natashaval.futuredatabinding.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -24,14 +20,16 @@ class MainActivity : AppCompatActivity() {
     val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     binding.lifecycleOwner = this
     binding.viewmodel = viewModel
+    binding.activity = this
 
-    val plusScore = findViewById<Button>(R.id.bt_score_plus)
-    plusScore.setOnClickListener {
+    binding.btScorePlus.setOnClickListener {
       viewModel.updateScore(1)
     }
-    val minusScore = findViewById<Button>(R.id.bt_score_minus)
-    minusScore.setOnClickListener {
+    binding.btScoreMinus.setOnClickListener {
       viewModel.updateScore(-1)
+    }
+    binding.btProfileFragment.setOnClickListener {
+      openFragment()
     }
   }
 
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     startActivity(intent)
   }
 
-  fun openFragment(view: View) {
+  private fun openFragment() {
     val fragment = ProfileFragment.newInstance(viewModel.user.firstName, viewModel.user.lastName)
     fragment.show(supportFragmentManager, ProfileFragment.TAG)
   }

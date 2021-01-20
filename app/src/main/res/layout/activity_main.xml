@@ -7,6 +7,9 @@
         <variable
             name="viewmodel"
             type="com.natashaval.futuredatabinding.viewmodel.MainViewModel" />
+        <variable
+            name="activity"
+            type="com.natashaval.futuredatabinding.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8"
             android:text="@string/open_activity"
-            android:onClick="openActivity"
+            android:onClick="@{activity::openActivity}"
             app:layout_constraintEnd_toStartOf="@id/bt_profile_fragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_first_name" />
@@ -78,7 +81,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/open_fragment"
-            android:onClick="openFragment"
             app:layout_constraintBottom_toBottomOf="@+id/bt_profile_activity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bt_profile_activity"
@@ -112,6 +114,7 @@
             android:layout_height="wrap_content"
             android:text="@string/score_minus"
             android:textSize="@dimen/score_size"
+            android:onClick="@{() -> viewmodel.updateScore(-1)}"
             android:backgroundTint="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_score"
@@ -126,6 +129,7 @@
             android:text="@string/score_plus"
             android:textSize="@dimen/score_size"
             android:backgroundTint="@color/colorAccent"
+            android:onClick="@{() -> viewmodel.updateScore(1)}"
             app:layout_constraintStart_toEndOf="@id/tv_score"
             app:layout_constraintTop_toTopOf="@id/tv_score"
             app:layout_constraintBottom_toBottomOf="@id/tv_score"
