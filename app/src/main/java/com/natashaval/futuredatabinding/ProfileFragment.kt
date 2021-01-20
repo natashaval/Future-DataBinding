@@ -8,10 +8,14 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.natashaval.futuredatabinding.ProfileActivity.Companion.FIRST_NAME_KEY
 import com.natashaval.futuredatabinding.ProfileActivity.Companion.LAST_NAME_KEY
+import com.natashaval.futuredatabinding.databinding.ActivityProfileBinding
 
 class ProfileFragment : DialogFragment() {
     private var firstName: String? = null
     private var lastName: String? = null
+
+    private var _binding: ActivityProfileBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,16 +29,19 @@ class ProfileFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_profile, container, false)
+        _binding = ActivityProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val firstNameText = view.findViewById<TextView>(R.id.tv_first_name)
-        firstNameText.text = firstName
+        binding.tvFirstName.text = firstName
+        binding.tvLastName.text = lastName
+    }
 
-        val lastNameText = view.findViewById<TextView>(R.id.tv_last_name)
-        lastNameText.text = lastName
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

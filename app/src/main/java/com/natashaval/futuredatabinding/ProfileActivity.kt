@@ -3,17 +3,18 @@ package com.natashaval.futuredatabinding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import com.natashaval.futuredatabinding.databinding.ActivityProfileBinding
 
 class ProfileActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityProfileBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val firstNameText = findViewById<TextView>(R.id.tv_first_name)
-        firstNameText.text = intent.getStringExtra(FIRST_NAME_KEY)
-
-        val lastNameText = findViewById<TextView>(R.id.tv_last_name)
-        lastNameText.text = intent.getStringExtra(LAST_NAME_KEY)
+        binding.tvFirstName.text = intent.getStringExtra(FIRST_NAME_KEY)
+        binding.tvLastName.text = intent.getStringExtra(LAST_NAME_KEY)
     }
 
     companion object {
