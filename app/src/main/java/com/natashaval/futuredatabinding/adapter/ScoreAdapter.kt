@@ -3,10 +3,10 @@ package com.natashaval.futuredatabinding.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.natashaval.futuredatabinding.R
+import com.natashaval.futuredatabinding.databinding.ItemScoreBinding
 
 /**
  * Created by natasha.santoso on 20/01/21.
@@ -24,21 +24,21 @@ class ScoreAdapter(private val scoreList: List<Int>): RecyclerView.Adapter<Score
 
     override fun getItemCount(): Int = scoreList.size
 
-    class ScoreViewHolder(view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
-        private val v: View = view
-        private val textView: TextView
+    inner class ScoreViewHolder(view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
+        private val binding: ItemScoreBinding? = DataBindingUtil.bind(view)
 
         init {
-            v.setOnClickListener(this)
-            textView = v.findViewById(R.id.tv_score_data)
+            view.setOnClickListener(this)
         }
 
         fun bind(value: Int) {
-            textView.text = "Score: $value"
+            binding?.score = value
         }
 
         override fun onClick(v: View?) {
-            textView.text = "Clicked! ${textView.text}"
+            binding?.tvScoreData?.run {
+                text = "Clicked! ${this.text}"
+            }
         }
     }
 }

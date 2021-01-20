@@ -8,9 +8,6 @@
     <string name="last_name_hint">Doe</string>
     <string name="score_minus">-1</string>
     <string name="score_plus">+1</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="generate_score">Generate Score Board</string>
+    <string name="score_board">Score: %d</string>
 </resources>
