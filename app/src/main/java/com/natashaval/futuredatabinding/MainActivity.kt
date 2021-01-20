@@ -6,52 +6,43 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.natashaval.futuredatabinding.ProfileActivity.Companion.FIRST_NAME_KEY
 import com.natashaval.futuredatabinding.ProfileActivity.Companion.LAST_NAME_KEY
+import com.natashaval.futuredatabinding.databinding.ActivityMainBinding
 import com.natashaval.futuredatabinding.model.User
+import com.natashaval.futuredatabinding.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-  private val user = User("Natasha", "Santoso")
-  private lateinit var score: TextView
+  private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-
-    val firstNameText = findViewById<TextView>(R.id.tv_first_name)
-    firstNameText.text = user.firstName
-
-    val lastNameText = findViewById<TextView>(R.id.tv_last_name)
-    lastNameText.text = user.lastName
-
-    score = findViewById<TextView>(R.id.tv_score)
-    score.text = user.score.toString()
+    val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    binding.viewmodel = viewModel
 
     val plusScore = findViewById<Button>(R.id.bt_score_plus)
     plusScore.setOnClickListener {
-      updateScore(1)
+      viewModel.updateScore(1)
     }
     val minusScore = findViewById<Button>(R.id.bt_score_minus)
     minusScore.setOnClickListener {
-      updateScore(-1)
+      viewModel.updateScore(-1)
     }
   }
 
   fun openActivity(view: View) {
     val intent = Intent(this, ProfileActivity::class.java)
-    intent.putExtra(FIRST_NAME_KEY, user.firstName)
-    intent.putExtra(LAST_NAME_KEY, user.lastName)
+    intent.putExtra(FIRST_NAME_KEY, viewModel.user.firstName)
+    intent.putExtra(LAST_NAME_KEY, viewModel.user.lastName)
     startActivity(intent)
   }
 
   fun openFragment(view: View) {
-    val fragment = ProfileFragment.newInstance(user.firstName, user.lastName)
+    val fragment = ProfileFragment.newInstance(viewModel.user.firstName, viewModel.user.lastName)
     fragment.show(supportFragmentManager, ProfileFragment.TAG)
-  }
-
-  private fun updateScore(value: Int) {
-    user.score += value
-    score.text = user.score.toString()
   }
 }
