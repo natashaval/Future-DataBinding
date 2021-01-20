@@ -21,9 +21,9 @@ class MainViewModel : ViewModel() {
 //        score += value
         newScore.value = (newScore.value ?: 0) + value
     }
+}
 
-    @BindingAdapter("app:hideIfZero")
-    fun hideIfZero(view: View, score: Int) {
-        view.visibility = if (score == 0) View.GONE else View.VISIBLE
-    }
+@BindingAdapter("app:hideIfZero")
+fun hideIfZero(view: View, score: Int) {
+    view.visibility = if (score == 0) View.GONE else View.VISIBLE
 }

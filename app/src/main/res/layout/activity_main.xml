@@ -132,7 +132,7 @@
             android:textSize="@dimen/score_size"
             android:backgroundTint="@color/colorAccent"
             android:onClick="@{() -> viewmodel.updateScore(1)}"
-            android:visibility="@{viewmodel.newScore > 10 ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewmodel.newScore >= 10 ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toEndOf="@id/tv_score"
             app:layout_constraintTop_toTopOf="@id/tv_score"
             app:layout_constraintBottom_toBottomOf="@id/tv_score"
