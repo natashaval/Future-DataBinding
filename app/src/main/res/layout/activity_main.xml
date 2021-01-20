@@ -10,6 +10,7 @@
         <variable
             name="activity"
             type="com.natashaval.futuredatabinding.MainActivity" />
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -115,6 +116,7 @@
             android:text="@string/score_minus"
             android:textSize="@dimen/score_size"
             android:onClick="@{() -> viewmodel.updateScore(-1)}"
+            app:hideIfZero="@{viewmodel.newScore}"
             android:backgroundTint="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_score"
@@ -130,6 +132,7 @@
             android:textSize="@dimen/score_size"
             android:backgroundTint="@color/colorAccent"
             android:onClick="@{() -> viewmodel.updateScore(1)}"
+            android:visibility="@{viewmodel.newScore > 10 ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toEndOf="@id/tv_score"
             app:layout_constraintTop_toTopOf="@id/tv_score"
             app:layout_constraintBottom_toBottomOf="@id/tv_score"

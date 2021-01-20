@@ -1,5 +1,7 @@
 package com.natashaval.futuredatabinding.viewmodel
 
+import android.view.View
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.natashaval.futuredatabinding.model.User
@@ -18,5 +20,10 @@ class MainViewModel : ViewModel() {
     fun updateScore(value: Int) {
 //        score += value
         newScore.value = (newScore.value ?: 0) + value
+    }
+
+    @BindingAdapter("app:hideIfZero")
+    fun hideIfZero(view: View, score: Int) {
+        view.visibility = if (score == 0) View.GONE else View.VISIBLE
     }
 }
